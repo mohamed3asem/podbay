@@ -2,9 +2,9 @@ import { Suspense } from "react";
 import styled from "styled-components";
 
 import { EpisodesSection } from "../components/EpisodesSection";
-
 import { Podcastsection } from "../components/PodcatsSection";
 import { fetchSavepodcasts } from "../utils/Controllers/fetchSavePodcats";
+import { EmptyView } from "../components/EmptyView";
 
 const Container = styled.div`
   margin-top: 20px;
@@ -16,15 +16,11 @@ const Container = styled.div`
 
 export default function Search({ empyView, podcasts, episodes, searchString }) {
   if (empyView) {
-    return (
-      <span style={{ margin: "80px auto", color: "rgba(255, 255, 255, 0.7)" }}>Type in a search term to start.</span>
-    );
+    return <EmptyView />;
   }
 
   return (
-    <Suspense
-      fallback={() => <div style={{ width: 100, height: 100, background: "red", color: "yellow" }}>loading</div>}
-    >
+    <Suspense fallback={() => <></>}>
       <Container>
         {podcasts.length ? <Podcastsection podcasts={podcasts} title={`Top podcasts for ${searchString}`} /> : null}
 
@@ -41,6 +37,9 @@ export const getServerSideProps = async ({ query, res: response }) => {
       return {
         props: {
           empyView: true,
+          podcasts: [],
+          episodes: [],
+          searchString,
         },
       };
     }

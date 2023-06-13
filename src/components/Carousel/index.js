@@ -1,4 +1,4 @@
-import React, { useState, useEffect, forwardRef } from "react";
+import React, { forwardRef } from "react";
 import styled from "styled-components";
 import { Podcast } from "../PodcatsSection/Podcast";
 

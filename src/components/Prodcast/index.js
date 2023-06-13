@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Image from "next/image";
-import { randomColor } from "../../../utils/helperFunctions";
+import { randomColor } from "../../utils/helperFunctions";
 
 import { Options } from "../../../public/Options";
 

@@ -34,7 +34,6 @@ export const SearchInput = () => {
   const debouncedSearchString = useDebounce(searchString, 300);
 
   const onInputChange = (e) => {
-    console.log(e.target.value);
     e.preventDefault();
     setSearchString(e.target.value);
   };

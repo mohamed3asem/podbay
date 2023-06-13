@@ -1,5 +1,5 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import connectMongo from "../../../utils/connectMongo";
+import connectMongo from "../../utils/connectMongo";
 import ProdCast from "../../../lib/mongoDb/models/prodcastModel";
 
 export default async function handler(req, res) {

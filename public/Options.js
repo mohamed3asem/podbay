@@ -3,9 +3,8 @@ export const Options = ({ style }) => {
     <svg
       stroke="currentColor"
       fill="currentColor"
-      stroke-width="0"
+      strokeWidth="0"
       viewBox="0 0 24 24"
-      class="jsx-973979416 jsx-4196970859"
       height="22"
       width="22"
       xmlns="http://www.w3.org/2000/svg"

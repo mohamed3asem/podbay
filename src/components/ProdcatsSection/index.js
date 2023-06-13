@@ -25,7 +25,7 @@ const ArrowsContainer = styled.div`
 `;
 export const Prodcastsection = ({ prodcasts, searchString }) => {
   const ref = useRef(null);
-  console.log(prodcasts);
+
   const prev = () => {
     requestAnimationFrame(() => {
       const scrollLeft = ref.current.scrollLeft;

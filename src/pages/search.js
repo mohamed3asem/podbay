@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import styled from "styled-components";
 
 import { EpisodesSection } from "../components/EpisodesSection";
-import connectMongo from "../../utils/connectMongo";
+import connectMongo from "../utils/connectMongo";
 import ProdCast from "../../lib/mongoDb/models/prodcastModel";
 import { Prodcastsection } from "../components/ProdcatsSection";
 
@@ -20,7 +20,7 @@ export default function Search({ empyView, prodcasts, episodes, searchString }) 
       <span style={{ margin: "80px auto", color: "rgba(255, 255, 255, 0.7)" }}>Type in a search term to start.</span>
     );
   }
-  console.log(prodcasts);
+
   return (
     <Suspense
       fallback={() => <div style={{ width: 100, height: 100, background: "red", color: "yellow" }}>loading</div>}
@@ -37,7 +37,6 @@ export default function Search({ empyView, prodcasts, episodes, searchString }) 
 export const getServerSideProps = async ({ query, res: response }) => {
   try {
     const searchString = query.q;
-    console.log(searchString);
     if (!searchString) {
       return {
         props: {
@@ -48,7 +47,6 @@ export const getServerSideProps = async ({ query, res: response }) => {
     let data = await fetch(`https://itunes.apple.com/search?term=${searchString}`);
     data = await data.json();
 
-    console.log("conneting", data.res);
     await connectMongo();
     const prodcastsUpdateOperations = [];
     const prodcasts = [];
@@ -83,7 +81,7 @@ export const getServerSideProps = async ({ query, res: response }) => {
     return { props: { prodcasts, episodes: episodes.slice(0, 15), searchString } };
   } catch (e) {
     console.log(e);
-    console.log("=========");
+
     return {
       props: {
         empyView: true,

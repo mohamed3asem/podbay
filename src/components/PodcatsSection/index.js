@@ -23,7 +23,7 @@ const ArrowsContainer = styled.div`
     }
   }
 `;
-export const Prodcastsection = ({ prodcasts, searchString }) => {
+export const Podcastsection = ({ podcasts, title }) => {
   const ref = useRef(null);
 
   const prev = () => {
@@ -44,7 +44,7 @@ export const Prodcastsection = ({ prodcasts, searchString }) => {
 
   return (
     <>
-      <SectionHeader title={`Top prodcasts for ${searchString}`}>
+      <SectionHeader title={title}>
         <ArrowsContainer>
           <ArrowRight
             onClick={prev}
@@ -57,7 +57,7 @@ export const Prodcastsection = ({ prodcasts, searchString }) => {
         </ArrowsContainer>
       </SectionHeader>
       <CarusolContainer>
-        <Carousel ref={ref} prodcasts={prodcasts} />
+        <Carousel ref={ref} podcasts={podcasts} />
       </CarusolContainer>
     </>
   );

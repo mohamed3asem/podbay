@@ -45,15 +45,23 @@ export const SearchInput = () => {
   };
 
   useEffect(() => {
-    router.push(`/search?q=${debouncedSearchString}`);
-  }, [debouncedSearchString]);
+    if (router.pathname === "/search") {
+      router.push(`/search?q=${debouncedSearchString}`);
+    }
+  }, [debouncedSearchString, router.pathname]);
+
+  useEffect(() => {
+    if (typeof router.query.q === "string") {
+      setSearchString(router.query.q);
+    }
+  }, [router.query.q]);
 
   return (
     <Input
       value={searchString}
       onFocus={onFocus}
       onChange={onInputChange}
-      placeholder="Search through over 30 million prodcasts ans episodes..."
+      placeholder="Search through over 30 million podcasts ans episodes..."
       style={{ flex: 1 }}
     />
   );

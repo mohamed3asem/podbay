@@ -2,9 +2,9 @@ import { Suspense } from "react";
 import styled from "styled-components";
 
 import { EpisodesSection } from "../components/EpisodesSection";
-import connectMongo from "../utils/connectMongo";
-import ProdCast from "../../lib/mongoDb/models/prodcastModel";
-import { Prodcastsection } from "../components/ProdcatsSection";
+
+import { Podcastsection } from "../components/PodcatsSection";
+import { fetchSavepodcasts } from "../utils/Controllers/fetchSavePodcats";
 
 const Container = styled.div`
   margin-top: 20px;
@@ -14,7 +14,7 @@ const Container = styled.div`
   flex-direction: column;
 `;
 
-export default function Search({ empyView, prodcasts, episodes, searchString }) {
+export default function Search({ empyView, podcasts, episodes, searchString }) {
   if (empyView) {
     return (
       <span style={{ margin: "80px auto", color: "rgba(255, 255, 255, 0.7)" }}>Type in a search term to start.</span>
@@ -26,9 +26,9 @@ export default function Search({ empyView, prodcasts, episodes, searchString }) 
       fallback={() => <div style={{ width: 100, height: 100, background: "red", color: "yellow" }}>loading</div>}
     >
       <Container>
-        {prodcasts.length ? <Prodcastsection prodcasts={prodcasts} searchString={searchString} /> : null}
+        {podcasts.length ? <Podcastsection podcasts={podcasts} title={`Top podcasts for ${searchString}`} /> : null}
 
-        {episodes.length ? <EpisodesSection episodes={episodes} searchString={searchString} /> : null}
+        {episodes.length ? <EpisodesSection episodes={episodes} title={`Top episodes for ${searchString}`} /> : null}
       </Container>
     </Suspense>
   );
@@ -44,47 +44,18 @@ export const getServerSideProps = async ({ query, res: response }) => {
         },
       };
     }
-    let data = await fetch(`https://itunes.apple.com/search?term=${searchString}`);
-    data = await data.json();
 
-    await connectMongo();
-    const prodcastsUpdateOperations = [];
-    const prodcasts = [];
-    const episodes = [];
+    const { podcasts, episodes } = await fetchSavepodcasts(searchString);
 
-    data.results.forEach((item) => {
-      if (!item.trackId) return;
-      const newItem = {
-        trackName: item.trackName || "",
-        artistName: item.artistName || "",
-        kind: item.kind || "",
-        artworkUrl600: item.artworkUrl600 || item.artworkUrl100,
-        trackId: item.trackId,
-      };
-      prodcastsUpdateOperations.push({
-        updateOne: {
-          filter: {
-            trackId: item.trackId,
-          },
-          update: newItem,
-          upsert: true,
-        },
-      });
-      if (newItem.kind === "podcast") {
-        prodcasts.push(newItem);
-      } else {
-        episodes.push(newItem);
-      }
-    });
-    const prodcast = await ProdCast.bulkWrite(prodcastsUpdateOperations);
     response.setHeader("Cache-Control", "public, s-maxage=10, stale-while-revalidate=59");
-    return { props: { prodcasts, episodes: episodes.slice(0, 15), searchString } };
+    return { props: { podcasts, episodes: episodes.slice(0, 15), searchString, empyView: false } };
   } catch (e) {
-    console.log(e);
-
     return {
       props: {
         empyView: true,
+        podcasts: [],
+        episodes: [],
+        searchString,
       },
     };
   }

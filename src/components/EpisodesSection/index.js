@@ -19,10 +19,10 @@ const EpisodesContainer = styled.div`
   /* flex-direction: column; */
 `;
 
-export const EpisodesSection = ({ episodes, searchString }) => {
+export const EpisodesSection = ({ episodes, title }) => {
   return (
     <Container>
-      <SectionHeader title={`Top episodes for ${searchString}`} />
+      <SectionHeader title={title} />
       <EpisodesContainer>
         {episodes.map((episode) => (
           <Episode key={episode.trackId} episode={episode} />

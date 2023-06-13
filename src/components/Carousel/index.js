@@ -1,29 +1,30 @@
 import React, { useState, useEffect, forwardRef } from "react";
 import styled from "styled-components";
-import { Prodcast } from "../Prodcast";
+import { Podcast } from "../PodcatsSection/Podcast";
 
 const Wrapper = styled.section`
   display: flex;
   flex-wrap: nowrap;
   overflow: auto;
-  margin: 0px 10px 20px 10px;
+  margin: 0px 10px 10px 10px;
   scroll-behavior: smooth;
   width: 1px;
   flex: 1 0 auto;
   padding: 15px 0px 25px 0px;
-  :hover {
+  height: 280px;
+  /* :hover {
     margin: 0px 10px 13px 10px;
-  }
+  } */
   :hover::-webkit-scrollbar {
     height: 10px;
   }
 `;
 
-const ForwardedCarousel = ({ forwardedRef, prodcasts }) => {
+const ForwardedCarousel = ({ forwardedRef, podcasts }) => {
   return (
     <Wrapper className="carouselContainer" ref={forwardedRef}>
-      {prodcasts?.map((prodcast) => (
-        <Prodcast key={prodcast.trackId} prodcast={prodcast} />
+      {podcasts?.map((podcast) => (
+        <Podcast key={podcast.trackId} podcast={podcast} />
       ))}
     </Wrapper>
   );

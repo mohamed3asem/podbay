@@ -71,7 +71,7 @@ export const Header = () => {
         <button onClick={() => {}}>Log in</button>
         <button onClick={() => {}}>Sign up</button>
       </ButtonsContainer>
-      <Options />
+      <Options style={{ cursor: "pointer" }} />
     </HeaderContainer>
   );
 };

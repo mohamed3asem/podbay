@@ -35,7 +35,14 @@ const TextContainer = styled.span`
 export const Podcast = ({ podcast }) => {
   return (
     <PodcastContainer>
-      <Image width={220} height={220} style={{ borderRadius: 3 }} alt="cover title" src={podcast.artworkUrl600} />
+      <Image
+        priority
+        width={220}
+        height={220}
+        style={{ borderRadius: 3 }}
+        alt="cover title"
+        src={podcast.artworkUrl600}
+      />
       <TitleContainer>
         <TextContainer>{podcast.trackName}</TextContainer>
         <Options />
